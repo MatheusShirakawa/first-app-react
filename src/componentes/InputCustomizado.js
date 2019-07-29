@@ -3,11 +3,9 @@ import PubSub from 'pubsub-js';
 
 export default class InputCustomizado extends Component{
 
-
 	constructor(){
 		super();
 		this.state = {msgErro : ''}
-
 	}
 
 	render(){

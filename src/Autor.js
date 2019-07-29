@@ -60,26 +60,26 @@ export class FormularioAutor extends Component{
 	  this.setState({password:evento.target.value});
 	}
 
-	render(){
-		return (
-			<div className="content" id="content">
-                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="get">
+        render(){
+            return (
+                <div className="content" id="content">
+                    <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="get">
 
-                    <InputCustomizado id="name" type="text" name="name" value={this.state.name} label="Nome"  onChange={this.setName} />
+                        <InputCustomizado id="name" type="text" name="name" value={this.state.name} label="Nome"  onChange={this.setName} />
 
-                    <InputCustomizado id="email" type="email" name="email" value={this.state.email} label="Email"  onChange={this.setEmail} />
+                        <InputCustomizado id="email" type="email" name="email" value={this.state.email} label="Email"  onChange={this.setEmail} />
 
-                    <InputCustomizado id="password" type="password" name="password" value={this.state.password} label="Senha" onChange={this.setPassword} />
+                        <InputCustomizado id="password" type="password" name="password" value={this.state.password} label="Senha" onChange={this.setPassword} />
 
-                    <div className="pure-control-group">
-                        <label></label>
-                        <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                    </div>
-                </form>
-            </div>
+                        <div className="pure-control-group">
+                            <label></label>
+                            <button type="submit" className="pure-button pure-button-primary">Gravar</button>
+                        </div>
+                    </form>
+                </div>
 
-		);
-	}
+            );
+        }
 }
 
 
@@ -145,10 +145,15 @@ export default class AutorBox extends Component{
 
 	render(){
 		return(
-			<div>
-				{/* <FormularioAutor callBackAtualizaListagem={this.atualizaListagem}/> */}
-                <FormularioAutor/>
-				<TabelaAutores lista={this.state.lista}/>
+            <div>
+                {/* <div className="header">
+                    <h1>Cadastro de Autores</h1>
+                </div> */}
+                <div className="content" id="content">
+                    {/* <FormularioAutor callBackAtualizaListagem={this.atualizaListagem}/> */}
+                    <FormularioAutor/>
+                    <TabelaAutores lista={this.state.lista}/>
+                </div> 
 			</div>
 		);
 	}
