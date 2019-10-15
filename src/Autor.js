@@ -9,14 +9,14 @@ export class FormularioAutor extends Component{
 	constructor(){
         super();
         this.state = {lista: [], name:'', email:'', password:''};
-        this.setName = this.setName.bind(this);
+				/*this.setName = this.setName.bind(this);
         this.setEmail = this.setEmail.bind(this);
-        this.setPassword = this.setPassword.bind(this);
+        this.setPassword = this.setPassword.bind(this);*/
     }
 
 	enviaForm(evento){
 	  evento.preventDefault();
-	  console.log('dados sendo enviados');      
+	  console.log('dados sendo enviados');
 
 
 	  $.ajax({
@@ -31,7 +31,7 @@ export class FormularioAutor extends Component{
                 this.setState({name:'', email:'', password:''});
 
             // this.props.callBackAtualizaListagem(resposta[1].original[1]);
-            // disparar um aviso geral de nova listagem disponivel  
+            // disparar um aviso geral de nova listagem disponivel
 	        // this.setState({lista:resposta[1].original[1]});
 	      }.bind(this),
 	      error:function (resposta){
@@ -48,6 +48,13 @@ export class FormularioAutor extends Component{
 	  });
 	}
 
+	salvaAlteracao(nomeInput, evento){
+		var campoSendoAlterado = {};
+		campoSendoAlterado[nomeInput] = evento.target.value;
+		this.setState(campoSendoAlterado);
+	}
+
+	/*
 	setName(evento){
 	  this.setState({name:evento.target.value});
 	}
@@ -59,17 +66,18 @@ export class FormularioAutor extends Component{
 	setPassword(evento){
 	  this.setState({password:evento.target.value});
 	}
+	*/
 
         render(){
             return (
                 <div className="content" id="content">
                     <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="get">
 
-                        <InputCustomizado id="name" type="text" name="name" value={this.state.name} label="Nome"  onChange={this.setName} />
+                        <InputCustomizado id="name" type="text" name="name" value={this.state.name} label="Nome"  onChange={this.salvaAlteracao.bind(this,'name')} />
 
-                        <InputCustomizado id="email" type="email" name="email" value={this.state.email} label="Email"  onChange={this.setEmail} />
+                        <InputCustomizado id="email" type="email" name="email" value={this.state.email} label="Email"  onChange={this.salvaAlteracao.bind(this,'email')} />
 
-                        <InputCustomizado id="password" type="password" name="password" value={this.state.password} label="Senha" onChange={this.setPassword} />
+                        <InputCustomizado id="password" type="password" name="password" value={this.state.password} label="Senha" onChange={this.salvaAlteracao.bind(this,'password')} />
 
                         <div className="pure-control-group">
                             <label></label>
@@ -88,30 +96,29 @@ export class TabelaAutores extends Component{
 	render(){
 		return (
 			<div>
-                <table className="pure-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Senha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.props.lista.map(function (author){
-                            return (
-                                <tr key={author.id}>
-                                    <td>{author.name}</td>
-                                    <td>{author.email}</td>
-                                    <td>{author.password}</td>
-                                </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </table>
-            </div>
-
+          <table className="pure-table">
+              <thead>
+                  <tr>
+                      <th>Nome</th>
+                      <th>Email</th>
+                      <th>Senha</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {
+                      this.props.lista.map(function (author){
+                      return (
+                          <tr key={author.id}>
+                              <td>{author.name}</td>
+                              <td>{author.email}</td>
+                              <td>{author.password}</td>
+                          </tr>
+                          );
+                      })
+                  }
+              </tbody>
+          </table>
+      </div>
 		);
 	}
 }
@@ -132,10 +139,10 @@ export default class AutorBox extends Component{
                 console.log(resposta);
                 this.setState({lista:resposta[1]});
             }.bind(this)
-        });  
-        
+        });
+
         PubSub.subscribe('atualiza-listagem-autores', function (topico,novaLista){
-           this.setState({lista:novaLista}); 
+           this.setState({lista:novaLista});
         }.bind(this));
     }
 
@@ -153,9 +160,8 @@ export default class AutorBox extends Component{
                     {/* <FormularioAutor callBackAtualizaListagem={this.atualizaListagem}/> */}
                     <FormularioAutor/>
                     <TabelaAutores lista={this.state.lista}/>
-                </div> 
+                </div>
 			</div>
 		);
 	}
 }
-
